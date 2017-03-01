@@ -1,21 +1,30 @@
-function Voter() {
+function Voter(options) {
+  elem = document.getElementById(options.elem);
+
   var
     vote = document.getElementsByClassName('vote')[0],
     up = document.getElementsByClassName('up')[0],
-    down = document.getElementsByClassName('down')[0];
+    down = document.getElementsByClassName('down')[0],
+    votesCount;
+
   this.setVote = function (votes) {
-    vote.innerHTML = votes >= 0 ? votes : 0;
+    votesCount = votes >= 0 ? votes : 0;
+    vote.innerText = votesCount;
   };
 
+  votesCount = vote.innerText;
+
   up.onclick = function () {
-    vote.innerHTML = +(vote.innerHTML) + 1;
+    vote.innerText = ++votesCount;
   };
 
   down.onclick = function () {
-    vote.innerHTML = (vote.innerHTML > 0) ? +(vote.innerHTML) - 1 : 0;
+    vote.innerText = votesCount > 0 ? --votesCount : 0;
   };
 }
 
-var voter = new Voter();
+var voter = new Voter({
+  elem: 'voter'
+});
 votes = prompt('Введите начальное количество голосов: ');
 voter.setVote(votes);
